@@ -10,6 +10,7 @@ Use [npm](https://www.npmjs.com/)(server) and [yarn](https://yarnpkg.com/)(clien
 
 ```bash
 npm install
+yarn 
 ```
 
 ## Usage

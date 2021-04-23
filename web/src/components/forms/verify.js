@@ -53,6 +53,7 @@ export default function VerifyForm(props) {
               Card Number
             </label>
             <input
+              required
               {...register("number")}
               type="number"
               id="number"

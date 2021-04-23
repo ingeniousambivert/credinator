@@ -22,10 +22,10 @@ export default function VerifyForm(props) {
   };
 
   return (
-    <div className="max-w-md mx-auto text-center">
+    <div className="max-w-md mx-auto">
       <div className="mb-10 max-w-md mx-auto">
         <button
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-100 border border-indigo-400 text-indigo-700"
+          className="group relative w-full flex justify-center py-2 px-4 text-center border-transparent text-sm font-medium rounded-md bg-indigo-100 border border-indigo-400 text-indigo-700"
           onClick={() => {
             setShowVerify(false);
           }}
@@ -35,7 +35,7 @@ export default function VerifyForm(props) {
       </div>
       {error && (
         <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 text-center rounded relative"
           role="alert"
         >
           <span className="block sm:inline">
@@ -75,14 +75,14 @@ export default function VerifyForm(props) {
         {result &&
           (result.result ? (
             <div
-              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded text-center relative"
               role="alert"
             >
               <span className="block sm:inline">The card number is valid</span>
             </div>
           ) : (
             <div
-              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center relative"
               role="alert"
             >
               <span className="block sm:inline">

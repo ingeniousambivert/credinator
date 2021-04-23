@@ -6,7 +6,7 @@ Read more [here](https://childofcode.com/java-script-luhn-algorithm/).
 
 ## Installation
 
-Use [npm](https://www.npmjs.com/) to install all the dependencies.
+Use [npm](https://www.npmjs.com/)(server) and [yarn](https://yarnpkg.com/)(client) to install all the dependencies.
 
 ```bash
 npm install

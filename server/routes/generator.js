@@ -14,7 +14,7 @@ router.get("/brands", getBrands);
 
 router.get("/banks", getBanks);
 
-router.post("/countries", getCountries);
+router.get("/countries", getCountries);
 
 router.post("/generate", generateCards);
 

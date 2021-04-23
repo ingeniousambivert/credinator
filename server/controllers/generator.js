@@ -1,11 +1,7 @@
 const GenerateCreditCard = require("../utils/generator");
-const {
-  brandsList,
-  banksList,
-  countriesByBanksList,
-} = require("../utils/fixtures");
+const { brandsList, banksList, countriesList } = require("../utils/fixtures");
 const verifyCardNumber = require("../utils/verify");
-const { sanitizeString, serverErrorMessage } = require("../utils/");
+const { serverErrorMessage } = require("../utils/");
 
 function getBrands(req, res) {
   try {
@@ -27,20 +23,7 @@ function getBanks(req, res) {
 
 function getCountries(req, res) {
   try {
-    const { bank } = req.body;
-    if (typeof bank === "undefined") {
-      res.status(400).json("Please input a bank name");
-    }
-    const banks = Object.keys(countriesByBanksList);
-    let response = new Array();
-
-    for (let bankName of banks) {
-      if (sanitizeString(bank) === sanitizeString(bankName)) {
-        response = countriesByBanksList[bankName];
-      }
-    }
-
-    res.status(200).send(response);
+    res.status(200).send(countriesList);
   } catch (error) {
     console.log(error);
     res.status(400).send(serverErrorMessage);
@@ -49,9 +32,18 @@ function getCountries(req, res) {
 
 function generateCards(req, res) {
   try {
-    let { brand, bank, country, min_money, max_money, quantity } = req.body;
-    if (typeof bank === "undefined")
-      res.status(400).send("Please input a bank name");
+    let {
+      brand,
+      country,
+      minMoney,
+      maxMoney,
+      cvv,
+      pin,
+      month,
+      year,
+      quantity,
+    } = req.body;
+
     if (typeof country === "undefined")
       res.status(400).send("Please input a country name");
     if (typeof brand === "undefined")
@@ -59,10 +51,13 @@ function generateCards(req, res) {
     else {
       const creditCards = GenerateCreditCard(
         brand,
-        bank,
         country,
-        min_money,
-        max_money,
+        minMoney,
+        maxMoney,
+        cvv,
+        pin,
+        month,
+        year,
         quantity
       );
       res.status(200).send(creditCards);
@@ -77,9 +72,9 @@ function verifyCard(req, res) {
   try {
     const result = verifyCardNumber(req.body.number);
     if (result === true) {
-      res.status(200).send(`Credit card number is VALID : ${result}`);
+      res.status(200).json({ status: "valid", result });
     } else {
-      res.status(200).send(`Credit card number is NOT VALID : ${result}`);
+      res.status(200).json({ status: "invalid", result });
     }
   } catch (error) {
     console.log(error);

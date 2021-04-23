@@ -137,15 +137,27 @@ function generateMoney(minimum, maximum) {
   return Math.floor(Math.random() * (maximum - minimum)) + minimum;
 }
 
-function generateExpiryDate(minimum, maximum) {
-  if (minimum < 2021 || typeof minimum === "undefined") minimum = 2021;
-  if (maximum > 2030 || typeof maximum === "undefined") maximum = 2030;
-
-  const month = Math.floor(Math.random() * (12 - 1)) + 1;
-  const year = Math.floor(Math.random() * (maximum - minimum)) + minimum;
-  const date = `${month}/${year}`;
-
-  return date;
+function generateExpiryDate(month, year) {
+  if (typeof month === "undefined" && typeof year === "undefined") {
+    const randomMonth = Math.floor(Math.random() * (12 - 1)) + 1;
+    const randomYear = Math.floor(Math.random() * (2030 - 2021)) + 2021;
+    const date = `${randomMonth}/${randomYear}`;
+    return date;
+  }
+  if (typeof month === "undefined") {
+    const randomMonth = Math.floor(Math.random() * (12 - 1)) + 1;
+    const date = `${randomMonth}/${year}`;
+    return date;
+  }
+  if (typeof year === "undefined") {
+    const randomYear = Math.floor(Math.random() * (2030 - 2021)) + 2021;
+    const date = `${month}/${randomYear}`;
+    return date;
+  }
+  if (year && month) {
+    const date = `${month}/${year}`;
+    return date;
+  }
 }
 
 function generateCardNumber(prefix, length) {
@@ -186,10 +198,13 @@ function generateCardNumber(prefix, length) {
 
 function GenerateCreditCard(
   cardBrand,
-  bank,
   country,
   minMoney,
   maxMoney,
+  cvv,
+  pin,
+  month,
+  year,
   quantity
 ) {
   cardBrand = trimSpaceLower(cardBrand);
@@ -204,7 +219,6 @@ function GenerateCreditCard(
 
     for (let i = 0; i < quantity; i++) {
       let card = new Object();
-      card["bank"] = bank.toUpperCase();
       card["card_brand"] = cardBrand.toUpperCase();
       let randomArrayIndex = Math.floor(pseudoRandom() * prefixList.length);
       let ccnumber = prefixList[randomArrayIndex];
@@ -214,10 +228,10 @@ function GenerateCreditCard(
       card["address"] =
         faker.address.streetAddress().toUpperCase() +
         faker.address.city().toUpperCase();
-      card["cvv"] = generateCVV();
-      card["card_pin"] = generateCardPin();
+      card["cvv"] = cvv || generateCVV();
+      card["card_pin"] = pin || generateCardPin();
       card["money"] = generateMoney(minMoney, maxMoney);
-      card["expiry_date"] = generateExpiryDate();
+      card["expiry_date"] = generateExpiryDate(month, year);
       result.push(card);
     }
 

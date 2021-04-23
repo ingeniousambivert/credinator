@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import client from "../utils/client";
-import { sanitizeString } from "../utils/";
+import client from "../../utils/client";
+import { sanitizeString } from "../../utils/";
 
-export default function FormComponent(props) {
+export default function GenerateForm(props) {
   const { setShowResult, setResultData, brands, countries } = props;
   const [error, setError] = useState(false);
   const { register, handleSubmit } = useForm();

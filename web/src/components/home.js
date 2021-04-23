@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
-import FormComponent from "./form";
+import React, { Fragment, useEffect, useState } from "react";
 import client from "../utils/client";
-import ResultComponent from "./result";
+import GenerateForm from "./forms/generate";
+import VerifyForm from "./forms/verify";
+import GenerateResult from "./results/generate";
 
 export default function HomeComponent() {
   const [brands, setBrands] = useState(null);
   const [countries, setCountries] = useState(null);
-  const [showResult, setShowResult] = useState(false);
-  const [resultData, setResultData] = useState(null);
+
+  const [showGenerateResult, setShowGenerateResult] = useState(false);
+  const [generateResultData, setGenerateResultData] = useState(null);
+
+  const [showVerify, setShowVerify] = useState(false);
 
   useEffect(() => {
     client.get("/generator/brands").then((data) => {
@@ -32,19 +36,34 @@ export default function HomeComponent() {
               Generate valid credit cards
             </p>
           </div>
-          {showResult ? (
-            <ResultComponent
-              resultData={resultData}
-              setShowResult={setShowResult}
-              setResultData={setResultData}
+          {showGenerateResult ? (
+            <GenerateResult
+              resultData={generateResultData}
+              setShowResult={setShowGenerateResult}
+              setResultData={setGenerateResultData}
             />
+          ) : showVerify ? (
+            <VerifyForm setShowVerify={setShowVerify} />
           ) : (
-            <FormComponent
-              setShowResult={setShowResult}
-              setResultData={setResultData}
-              brands={brands}
-              countries={countries}
-            />
+            <Fragment>
+              <GenerateForm
+                setShowResult={setShowGenerateResult}
+                setResultData={setGenerateResultData}
+                brands={brands}
+                countries={countries}
+              />
+              <div className="max-w-md mx-auto text-center">
+                <p className="mb-8 text-gray-500 text-xs"> OR</p>
+                <button
+                  onClick={() => {
+                    setShowVerify(true);
+                  }}
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Verify
+                </button>
+              </div>
+            </Fragment>
           )}
         </div>
       </div>

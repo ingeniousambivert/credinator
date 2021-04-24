@@ -7,7 +7,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "dev": "NODE_ENV=development nodemon --trace-warnings ./bin/www",
     "start": "NODE_ENV=production node ./bin/www",
-    "heroku-postbuild": "cd client && yarn --only=dev && yarn && yarn run build"
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "engines": {
     "node": "16.0.0"
